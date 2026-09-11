@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
+import { CYTRACK_LOGO } from '../constants/logo';
 
 const LoginPage: React.FC = () => {
   const navigate = useNavigate();
@@ -10,6 +11,14 @@ const LoginPage: React.FC = () => {
   const [formData, setFormData] = useState({ email: '', password: '' });
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const [loginSuccess, setLoginSuccess] = useState(false);
+
+  useEffect(() => {
+    if (loginSuccess) {
+      const t = setTimeout(() => navigate('/'), 1800);
+      return () => clearTimeout(t);
+    }
+  }, [loginSuccess, navigate]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -17,7 +26,7 @@ const LoginPage: React.FC = () => {
     setError('');
     try {
       await login(formData.email, formData.password);
-      navigate('/');
+      setLoginSuccess(true);
     } catch (err: any) {
       setError(err.message || 'Login failed. Please check your credentials.');
     } finally {
@@ -36,7 +45,7 @@ const LoginPage: React.FC = () => {
     },
     bg: {
       position: 'fixed' as const, inset: 0, zIndex: 0,
-      backgroundImage: 'url(https://res.cloudinary.com/dwsl2ktt2/image/upload/v1781229649/trackker_h8mkk8.png)',
+      backgroundImage: 'url(https://res.cloudinary.com/dwsl2ktt2/image/upload/v1781346830/back_d7gkkc.png)',
       backgroundSize: 'cover', backgroundPosition: 'center', backgroundRepeat: 'no-repeat',
     },
     bgOverlay: {
@@ -162,6 +171,10 @@ const LoginPage: React.FC = () => {
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
         @keyframes dot-pulse{0%{box-shadow:0 0 0 0 rgba(57,230,210,.55)}70%{box-shadow:0 0 0 8px rgba(57,230,210,0)}100%{box-shadow:0 0 0 0 rgba(57,230,210,0)}}
+        @keyframes fadeSlideIn{0%{opacity:0;transform:scale(.96)}100%{opacity:1;transform:scale(1)}}
+        @keyframes popIn{0%{transform:scale(0)}100%{transform:scale(1)}}
+        @keyframes drawCheck{to{stroke-dashoffset:0}}
+        @keyframes fadeSlideUp{0%{opacity:0;transform:translateY(12px)}100%{opacity:1;transform:translateY(0)}}
         *{margin:0;padding:0;box-sizing:border-box}
         @media (max-width:760px){
           .lg-header{padding:20px 24px!important}
@@ -217,18 +230,30 @@ const LoginPage: React.FC = () => {
         <div style={s.bgOverlay} />
       </div>
 
+      {loginSuccess && (
+        <div style={{ position: 'fixed', inset: 0, zIndex: 9999, display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'rgba(6,10,18,.85)', backdropFilter: 'blur(8px)', animation: 'fadeSlideIn .35s ease-out' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 20 }}>
+            <div style={{ width: 80, height: 80, borderRadius: '50%', background: 'linear-gradient(135deg, #39e6d2, #0f8a7f)', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 0 40px rgba(57,230,210,.4)', animation: 'popIn .5s cubic-bezier(.175,.885,.32,1.275)' }}>
+              <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#06120e" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" style={{ strokeDasharray: 60, strokeDashoffset: 60, animation: 'drawCheck .4s .35s ease forwards' }}>
+                <polyline points="20 6 9 17 4 12" />
+              </svg>
+            </div>
+            <div style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: '1.4rem', fontWeight: 700, color: '#eef2f8', textShadow: '0 2px 16px rgba(57,230,210,.3)', animation: 'fadeSlideUp .4s .5s ease both' }}>
+              Welcome back
+            </div>
+            <div style={{ fontSize: 14, color: '#8fa3b8', animation: 'fadeSlideUp .4s .65s ease both' }}>
+              Redirecting to dashboard…
+            </div>
+          </div>
+        </div>
+      )}
+
       <div style={{ position: 'relative', zIndex: 1, minHeight: 'min(100vh, 100dvh)', display: 'flex', flexDirection: 'column' }}>
         <header className="lg-header" style={s.header}>
           <div className="lg-brand" style={s.brand}>
-            <img
-              className="lg-brand-mark"
-              src="https://res.cloudinary.com/dwsl2ktt2/image/upload/v1781233036/tttracklogo_gutedz.png"
-              alt="CyTrack logo"
-              style={s.brandMark}
-            />
             <div style={s.brandText}>
-              <span className="lg-brand-name" style={s.brandName}>CyTrack</span>
-              <span className="lg-brand-tag" style={s.brandTag}>EVERGREEN LOGISTICS & TRANSPORT</span>
+              <span className="lg-brand-name" style={s.brandName}>{CYTRACK_LOGO.brandName}</span>
+              <span className="lg-brand-tag" style={s.brandTag}>{CYTRACK_LOGO.tagline}</span>
             </div>
           </div>
           <div className="lg-pill" style={s.statusPill}>
@@ -245,8 +270,6 @@ const LoginPage: React.FC = () => {
             </div>
 
             <h2 className="lg-h2" style={s.h2}>Welcome back</h2>
-            <p className="lg-sub" style={s.sub}>Sign in to your fleet operations console</p>
-
             {error && (
               <div style={s.errorBox}>{error}</div>
             )}
@@ -332,9 +355,6 @@ const LoginPage: React.FC = () => {
               </button>
             </form>
 
-            <div className="lg-divider" style={s.divider}>
-              <span style={s.dividerLine} />or<span style={s.dividerLine} />
-            </div>
 
        
 

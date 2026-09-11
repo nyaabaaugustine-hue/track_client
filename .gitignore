@@ -7,10 +7,23 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
+# Environment variables
+.env
+.env.local
+.env.development.local
+.env.production.local
+.env.development
+
+# Build outputs
 node_modules
 dist
 dist-ssr
 *.local
+
+# Lint/typecheck scratch output
+eslint_full.txt
+eslint_out.txt
+tsc_out.txt
 
 # Editor directories and files
 .vscode/*

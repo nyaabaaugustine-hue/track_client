@@ -39,15 +39,17 @@ const DEMO_SUPERVISORS: Supervisor[] = [
   { id: 3, name: 'Emmanuel Nkrumah', phone: '+233 20 345 6789', email: 'emmanuel.n@evergreen.com', region: 'Western', activeDrivers: 7, performance: 85 },
   { id: 4, name: 'Fatima Abubakar', phone: '+233 50 456 7890', email: 'fatima.a@evergreen.com', region: 'Northern', activeDrivers: 5, performance: 61 },
   { id: 5, name: 'Daniel Addo', phone: '+233 27 567 8901', email: 'daniel.a@evergreen.com', region: 'Eastern', activeDrivers: 8, performance: 73 },
+  { id: 6, name: 'Grace Osei', phone: '+233 24 678 9012', email: 'grace.o@evergreen.com', region: 'Central', activeDrivers: 6, performance: 88 },
+  { id: 7, name: 'Kwadwo Asamoah', phone: '+233 55 789 0123', email: 'kwadwo.a@evergreen.com', region: 'Volta', activeDrivers: 4, performance: 95 },
 ];
 
 const DEMO_PENDING_APPROVALS: PendingApproval[] = [
   { id: 1, type: 'deployment', requester: 'Kwame Asante', amount: 'Vehicle GT-4521-21', date: '2026-06-10', status: 'pending' },
-  { id: 2, type: 'remittance', requester: 'Akua Mensah', amount: 'GH₵ 2,450.00', date: '2026-06-10', status: 'pending' },
+  { id: 2, type: 'remittance', requester: 'Akua Mensah', amount: 'GHS 2,450.00', date: '2026-06-10', status: 'pending' },
   { id: 3, type: 'incident', requester: 'Yaw Owusu', amount: 'Rear-end collision', date: '2026-06-09', status: 'pending' },
   { id: 4, type: 'leave', requester: 'Esi Boateng', amount: '3 days (Jun 14-16)', date: '2026-06-09', status: 'pending' },
   { id: 5, type: 'deployment', requester: 'Kofi Adjei', amount: 'Vehicle GW-3312-20', date: '2026-06-08', status: 'approved' },
-  { id: 6, type: 'remittance', requester: 'Nana Yaa', amount: 'GH₵ 1,800.00', date: '2026-06-08', status: 'rejected' },
+  { id: 6, type: 'remittance', requester: 'Nana Yaa', amount: 'GHS 1,800.00', date: '2026-06-08', status: 'rejected' },
   { id: 7, type: 'incident', requester: 'Kojo Bonsu', amount: 'Tire burst - No injuries', date: '2026-06-07', status: 'pending' },
   { id: 8, type: 'leave', requester: 'Adwoa Sarpong', amount: '1 day (Jun 12)', date: '2026-06-07', status: 'approved' },
 ];
@@ -224,7 +226,7 @@ export default function CommandCenterPage() {
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: 14 }}>
         <div style={{ ...cardStyle, display: 'flex', alignItems: 'center', gap: 14 }}>
           <div style={{ width: 48, height: 48, borderRadius: 12, background: 'rgba(59,130,246,0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-            <i className="ti ti-users" style={{ fontSize: 22, color: '#3b82f6' }}></i>
+            <i className="las la-users" style={{ fontSize: 22, color: '#3b82f6' }}></i>
           </div>
           <div>
             <div style={{ fontSize: 24, fontWeight: 700, color: '#3b82f6' }}>{DEMO_SUPERVISORS.length}</div>
@@ -233,7 +235,7 @@ export default function CommandCenterPage() {
         </div>
         <div style={{ ...cardStyle, display: 'flex', alignItems: 'center', gap: 14 }}>
           <div style={{ width: 48, height: 48, borderRadius: 12, background: 'rgba(245,158,11,0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-            <i className="ti ti-clipboard-list" style={{ fontSize: 22, color: '#f59e0b' }}></i>
+            <i className="las la-clipboard-list" style={{ fontSize: 22, color: '#f59e0b' }}></i>
           </div>
           <div>
             <div style={{ fontSize: 24, fontWeight: 700, color: '#f59e0b', display: 'flex', alignItems: 'center', gap: 8 }}>
@@ -245,7 +247,7 @@ export default function CommandCenterPage() {
         </div>
         <div style={{ ...cardStyle, display: 'flex', alignItems: 'center', gap: 14 }}>
           <div style={{ width: 48, height: 48, borderRadius: 12, background: 'rgba(239,68,68,0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative' }}>
-            <i className="ti ti-bell-ringing" style={{ fontSize: 22, color: '#ef4444' }}></i>
+            <i className="las la-bell-ringing" style={{ fontSize: 22, color: '#ef4444' }}></i>
             <div style={{ position: 'absolute', top: 6, right: 6, width: 8, height: 8, borderRadius: '50%', background: '#ef4444', animation: 'pulse 1.5s infinite' }} />
           </div>
           <div>
@@ -255,7 +257,7 @@ export default function CommandCenterPage() {
         </div>
         <div style={{ ...cardStyle, display: 'flex', alignItems: 'center', gap: 14 }}>
           <div style={{ width: 48, height: 48, borderRadius: 12, background: 'rgba(34,197,94,0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-            <i className="ti ti-trending-up" style={{ fontSize: 22, color: '#22c55e' }}></i>
+            <i className="las la-chart-line" style={{ fontSize: 22, color: '#22c55e' }}></i>
           </div>
           <div>
             <div style={{ fontSize: 24, fontWeight: 700, color: perfColor(avgTeamScore) }}>{avgTeamScore}%</div>
@@ -270,7 +272,7 @@ export default function CommandCenterPage() {
         <div style={cardStyle}>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 16, cursor: 'pointer' }} onClick={() => setApprovalQueueOpen(v => !v)}>
             <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-              <i className="ti ti-clipboard-list" style={{ fontSize: 18, color: 'var(--text)' }}></i>
+              <i className="las la-clipboard-list" style={{ fontSize: 18, color: 'var(--text)' }}></i>
               <span style={{ fontSize: 15, fontWeight: 600, color: 'var(--text)' }}>Approval Queue</span>
               {pendingCount > 0 && <span style={{ fontSize: 11, fontWeight: 700, padding: '2px 10px', borderRadius: 999, background: 'rgba(245,158,11,0.2)', color: '#f59e0b' }}>{pendingCount} pending</span>}
             </div>
@@ -313,10 +315,10 @@ export default function CommandCenterPage() {
                       {a.status === 'pending' ? (
                         <>
                           <button onClick={() => handleApprove(a.id)} style={{ ...btnStyle, padding: '4px 10px', background: 'rgba(34,197,94,0.12)', borderColor: 'rgba(34,197,94,0.3)', color: '#22c55e' }}>
-                            <i className="ti ti-check" style={{ fontSize: 14 }}></i>
+                            <i className="las la-check" style={{ fontSize: 14 }}></i>
                           </button>
                           <button onClick={() => handleReject(a.id)} style={{ ...btnStyle, padding: '4px 10px', background: 'rgba(239,68,68,0.12)', borderColor: 'rgba(239,68,68,0.3)', color: '#ef4444' }}>
-                            <i className="ti ti-x" style={{ fontSize: 14 }}></i>
+                            <i className="las la-times" style={{ fontSize: 14 }}></i>
                           </button>
                         </>
                       ) : (
@@ -340,7 +342,7 @@ export default function CommandCenterPage() {
         <div style={cardStyle}>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 16 }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-              <i className="ti ti-bell-ringing" style={{ fontSize: 18, color: 'var(--text)' }}></i>
+              <i className="las la-bell-ringing" style={{ fontSize: 18, color: 'var(--text)' }}></i>
               <span style={{ fontSize: 15, fontWeight: 600, color: 'var(--text)' }}>Live Operations Feed</span>
               <div style={{ width: 8, height: 8, borderRadius: '50%', background: '#ef4444', animation: 'pulse 1.5s infinite' }} />
             </div>
@@ -350,7 +352,7 @@ export default function CommandCenterPage() {
             {DEMO_LIVE_ALERTS.map(a => (
               <div key={a.id} style={{ display: 'flex', alignItems: 'flex-start', gap: 10, padding: '10px 12px', borderRadius: 8, background: 'var(--bg3)', borderLeft: `3px solid ${severityColors[a.severity]}` }}>
                 <div style={{ width: 32, height: 32, borderRadius: 8, background: `${severityColors[a.severity]}18`, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-                  <i className="ti ti-alert-triangle" style={{ fontSize: 14, color: severityColors[a.severity] }}></i>
+                  <i className="las la-exclamation-triangle" style={{ fontSize: 14, color: severityColors[a.severity] }}></i>
                 </div>
                 <div style={{ flex: 1, minWidth: 0 }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: 6, flexWrap: 'wrap' }}>
@@ -360,9 +362,9 @@ export default function CommandCenterPage() {
                   </div>
                   <div style={{ fontSize: 12, color: 'var(--text)', marginTop: 2 }}>{a.description}</div>
                   <div style={{ fontSize: 11, color: 'var(--text3)', marginTop: 2 }}>
-                    <i className="ti ti-map-pin" style={{ fontSize: 11, marginRight: 3 }}></i>{a.location}
+                    <i className="las la-map-pin" style={{ fontSize: 11, marginRight: 3 }}></i>{a.location}
                     <span style={{ margin: '0 6px' }}>&middot;</span>
-                    <i className="ti ti-truck" style={{ fontSize: 11, marginRight: 3 }}></i>{a.vehicle}
+                    <i className="las la-truck" style={{ fontSize: 11, marginRight: 3 }}></i>{a.vehicle}
                   </div>
                 </div>
               </div>
@@ -374,7 +376,7 @@ export default function CommandCenterPage() {
       {/* Supervisor Team Overview */}
       <div style={cardStyle}>
         <div style={{ fontSize: 15, fontWeight: 600, color: 'var(--text)', marginBottom: 16, display: 'flex', alignItems: 'center', gap: 10 }}>
-          <i className="ti ti-users" style={{ fontSize: 18 }}></i>
+          <i className="las la-users" style={{ fontSize: 18 }}></i>
           Supervisor Team Overview
         </div>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 12 }}>
@@ -388,9 +390,9 @@ export default function CommandCenterPage() {
                   <div style={{ flex: 1, minWidth: 0 }}>
                     <div style={{ fontSize: 13, fontWeight: 600, color: 'var(--text)' }}>{sup.name}</div>
                     <div style={{ fontSize: 11, color: 'var(--text3)', display: 'flex', alignItems: 'center', gap: 4 }}>
-                      <i className="ti ti-map-pin" style={{ fontSize: 11 }}></i>{sup.region}
+                      <i className="las la-map-pin" style={{ fontSize: 11 }}></i>{sup.region}
                       <span style={{ margin: '0 4px' }}>&middot;</span>
-                      <i className="ti ti-steering-wheel" style={{ fontSize: 11 }}></i>{sup.activeDrivers} drivers
+                      <i className="las la-compass" style={{ fontSize: 11 }}></i>{sup.activeDrivers} drivers
                     </div>
                   </div>
                   <i className={`ti ${expandedSupervisor === sup.id ? 'ti-chevron-up' : 'ti-chevron-down'}`} style={{ fontSize: 14, color: 'var(--text3)' }}></i>
@@ -419,10 +421,10 @@ export default function CommandCenterPage() {
                   </div>
                   <div style={{ display: 'flex', gap: 6, marginTop: 10 }}>
                     <button style={{ ...btnStyle, flex: 1, justifyContent: 'center', padding: '6px 0', fontSize: 11 }}>
-                      <i className="ti ti-phone" style={{ fontSize: 12 }}></i> Call
+                      <i className="las la-phone" style={{ fontSize: 12 }}></i> Call
                     </button>
                     <button style={{ ...btnStyle, flex: 1, justifyContent: 'center', padding: '6px 0', fontSize: 11 }}>
-                      <i className="ti ti-mail" style={{ fontSize: 12 }}></i> Message
+                      <i className="las la-envelope" style={{ fontSize: 12 }}></i> Message
                     </button>
                   </div>
                 </div>
@@ -437,7 +439,7 @@ export default function CommandCenterPage() {
         {/* 7-Day Team Performance */}
         <div style={cardStyle}>
           <div style={{ fontSize: 15, fontWeight: 600, color: 'var(--text)', marginBottom: 16, display: 'flex', alignItems: 'center', gap: 10 }}>
-            <i className="ti ti-trending-up" style={{ fontSize: 18 }}></i>
+            <i className="las la-chart-line" style={{ fontSize: 18 }}></i>
             7-Day Team Performance
           </div>
           <div style={{ maxHeight: 320, overflowY: 'auto' }}>
@@ -470,7 +472,7 @@ export default function CommandCenterPage() {
         {/* Approval Chain Visualization */}
         <div style={cardStyle}>
           <div style={{ fontSize: 15, fontWeight: 600, color: 'var(--text)', marginBottom: 16, display: 'flex', alignItems: 'center', gap: 10 }}>
-            <i className="ti ti-hierarchy" style={{ fontSize: 18 }}></i>
+            <i className="las la-sitemap" style={{ fontSize: 18 }}></i>
             Approval Chain
           </div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 0, position: 'relative' }}>
@@ -507,27 +509,27 @@ export default function CommandCenterPage() {
       {/* Quick Actions Panel */}
       <div style={cardStyle}>
         <div style={{ fontSize: 15, fontWeight: 600, color: 'var(--text)', marginBottom: 16, display: 'flex', alignItems: 'center', gap: 10 }}>
-          <i className="ti ti-bolt" style={{ fontSize: 18 }}></i>
+          <i className="las la-bolt" style={{ fontSize: 18 }}></i>
           Quick Actions
         </div>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(160px, 1fr))', gap: 10 }}>
           <button onClick={() => handleApprove(approvals.filter(a => a.status === 'pending')[0]?.id)} style={{ ...btnStyle, flexDirection: 'column', padding: 18, gap: 8, alignItems: 'center', justifyContent: 'center', background: 'rgba(34,197,94,0.06)', borderColor: 'rgba(34,197,94,0.2)' }}>
-            <i className="ti ti-check-circle" style={{ fontSize: 24, color: '#22c55e' }}></i>
+            <i className="las la-check-circle" style={{ fontSize: 24, color: '#22c55e' }}></i>
             <span style={{ fontSize: 12, fontWeight: 600, color: '#22c55e' }}>Approve Pending</span>
             <span style={{ fontSize: 10, color: 'var(--text3)' }}>{pendingCount} items waiting</span>
           </button>
           <button style={{ ...btnStyle, flexDirection: 'column', padding: 18, gap: 8, alignItems: 'center', justifyContent: 'center', background: 'rgba(59,130,246,0.06)', borderColor: 'rgba(59,130,246,0.2)' }}>
-            <i className="ti ti-user-plus" style={{ fontSize: 24, color: '#3b82f6' }}></i>
+            <i className="las la-user-plus" style={{ fontSize: 24, color: '#3b82f6' }}></i>
             <span style={{ fontSize: 12, fontWeight: 600, color: '#3b82f6' }}>Deploy Driver</span>
             <span style={{ fontSize: 10, color: 'var(--text3)' }}>Assign to route</span>
           </button>
           <button style={{ ...btnStyle, flexDirection: 'column', padding: 18, gap: 8, alignItems: 'center', justifyContent: 'center', background: 'rgba(239,68,68,0.06)', borderColor: 'rgba(239,68,68,0.2)' }}>
-            <i className="ti ti-file-text" style={{ fontSize: 24, color: '#ef4444' }}></i>
+            <i className="las la-file-text" style={{ fontSize: 24, color: '#ef4444' }}></i>
             <span style={{ fontSize: 12, fontWeight: 600, color: '#ef4444' }}>Review Incident</span>
             <span style={{ fontSize: 10, color: 'var(--text3)' }}>{openIncidents} open cases</span>
           </button>
           <button style={{ ...btnStyle, flexDirection: 'column', padding: 18, gap: 8, alignItems: 'center', justifyContent: 'center', background: 'rgba(139,92,246,0.06)', borderColor: 'rgba(139,92,246,0.2)' }}>
-            <i className="ti ti-chart-bar" style={{ fontSize: 24, color: '#8b5cf6' }}></i>
+            <i className="las la-chart-bar" style={{ fontSize: 24, color: '#8b5cf6' }}></i>
             <span style={{ fontSize: 12, fontWeight: 600, color: '#8b5cf6' }}>Generate Report</span>
             <span style={{ fontSize: 10, color: 'var(--text3)' }}>PDF / Excel</span>
           </button>
@@ -587,7 +589,7 @@ export default function CommandCenterPage() {
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
             <div style={{ width: 44, height: 44, borderRadius: 12, background: sim.status.running ? 'rgba(16,185,129,0.15)' : 'rgba(92,111,138,0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <i className="ti ti-radar" style={{ fontSize: 22, color: sim.status.running ? 'var(--success)' : 'var(--text3)' }}></i>
+              <i className="las la-satellite-dish" style={{ fontSize: 22, color: sim.status.running ? 'var(--success)' : 'var(--text3)' }}></i>
             </div>
             <div>
               <div style={{ fontSize: 14, fontWeight: 600, color: 'var(--text)' }}>Live Simulation</div>
@@ -600,7 +602,7 @@ export default function CommandCenterPage() {
             </div>
           </div>
           <div style={{ display: 'flex', gap: 8 }}>
-            <button onClick={sim.refresh} style={btnStyle}><i className="ti ti-refresh" style={{ fontSize: 15 }}></i> Routes</button>
+            <button onClick={sim.refresh} style={btnStyle}><i className="las la-sync" style={{ fontSize: 15 }}></i> Routes</button>
             <button onClick={sim.status.running ? sim.stop : sim.start} disabled={sim.loading} style={{ ...btnStyle, background: sim.status.running ? 'rgba(239,68,68,0.12)' : 'rgba(16,185,129,0.12)', color: sim.status.running ? 'var(--danger)' : 'var(--success)', borderColor: sim.status.running ? 'rgba(239,68,68,0.3)' : 'rgba(16,185,129,0.3)', fontWeight: 600 }}>
               <i className={`ti ${sim.status.running ? 'ti-player-stop' : 'ti-player-play'}`} style={{ fontSize: 15 }}></i>
               {sim.status.running ? 'Stop' : 'Start'}

@@ -48,7 +48,7 @@ export default function DeploymentsPage() {
 
   const load = async () => {
     try { setLoading(true); setError(null); const result = await deploymentService.getAll(); setData(result.length > 0 ? result : DEMO_DEPLOYMENTS); }
-    catch (err: any) { setError(err.message || 'Failed to load'); setData(DEMO_DEPLOYMENTS); }
+    catch { setData(DEMO_DEPLOYMENTS); }
     finally { setLoading(false); }
   };
 
@@ -89,7 +89,7 @@ export default function DeploymentsPage() {
   return (
     <div>
       {error && <div style={{ marginBottom: 16, padding: '10px 14px', background: 'rgba(239,68,68,0.1)', border: '1px solid rgba(239,68,68,0.2)', borderRadius: 8, fontSize: 13, color: 'var(--danger)', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-        <span><i className="ti ti-alert-triangle" style={{ marginRight: 6 }}></i>{error}</span>
+        <span><i className="las la-exclamation-triangle" style={{ marginRight: 6 }}></i>{error}</span>
         <span style={{ cursor: 'pointer', fontWeight: 600, fontSize: 12 }} onClick={() => setError(null)}>Dismiss</span>
       </div>}
 
@@ -115,7 +115,7 @@ export default function DeploymentsPage() {
       <div style={{ background: 'var(--bg2)', border: '1px solid var(--border)', borderRadius: 10, padding: 14, marginBottom: 16, display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 12, flexWrap: 'wrap' }}>
         <div style={{ display: 'flex', gap: 10, alignItems: 'center', flexWrap: 'wrap' }}>
           <div style={{ position: 'relative' }}>
-            <i className="ti ti-search" style={{ position: 'absolute', left: 10, top: 9, fontSize: 15, color: 'var(--text3)' }}></i>
+            <i className="las la-search" style={{ position: 'absolute', left: 10, top: 9, fontSize: 15, color: 'var(--text3)' }}></i>
             <input placeholder="Search deployments..." value={search} onChange={e => { setSearch(e.target.value); setPage(0); }} style={{ ...inputStyle, paddingLeft: 32, width: 200 }} />
           </div>
           <select value={statusFilter} onChange={e => { setStatusFilter(e.target.value); setPage(0); }} style={{ ...inputStyle, width: 130, padding: '8px 10px' }}>
@@ -126,7 +126,7 @@ export default function DeploymentsPage() {
             <option value="cancelled">Cancelled</option>
           </select>
         </div>
-        <button style={btnPrimary} onClick={openAdd}><i className="ti ti-plus" style={{ fontSize: 15 }}></i> New Deployment</button>
+        <button style={btnPrimary} onClick={openAdd}><i className="las la-plus" style={{ fontSize: 15 }}></i> New Deployment</button>
       </div>
 
       <div style={{ background: 'var(--bg2)', border: '1px solid var(--border)', borderRadius: 10, overflow: 'hidden' }}>
@@ -152,14 +152,14 @@ export default function DeploymentsPage() {
                   <td style={cellStyle}>D#{d.driverId}</td>
                   <td style={cellStyle}>V#{d.vehicleId}</td>
                   <td style={{ ...cellStyle, fontSize: 12, textTransform: 'capitalize' }}>{d.type}</td>
-                  <td style={cellStyle}>{new Date(d.startDate).toLocaleDateString()}</td>
+                  <td style={cellStyle}>{d.startDate ? new Date(d.startDate).toLocaleDateString() : '—'}</td>
                   <td style={cellStyle}>{d.endDate ? new Date(d.endDate).toLocaleDateString() : '-'}</td>
                   <td style={cellStyle}>{d.shiftPattern}</td>
                   <td style={cellStyle}>{badge(d.status.charAt(0).toUpperCase() + d.status.slice(1), statusColor[d.status] || '#5c6f8a')}</td>
                   <td style={{ ...cellStyle, textAlign: 'center' }} onClick={e => e.stopPropagation()}>
                     <div style={{ display: 'flex', justifyContent: 'center', gap: 6 }}>
-                      <button style={{ ...btn, padding: '5px 10px' }} onClick={() => openEdit(d)}><i className="ti ti-edit" style={{ fontSize: 14 }}></i></button>
-                      <button style={{ ...btn, padding: '5px 10px', color: 'var(--danger)' }} onClick={() => handleDelete(d)}><i className="ti ti-trash" style={{ fontSize: 14 }}></i></button>
+                      <button style={{ ...btn, padding: '5px 10px' }} onClick={() => openEdit(d)}><i className="las la-edit" style={{ fontSize: 14 }}></i></button>
+                      <button style={{ ...btn, padding: '5px 10px', color: 'var(--danger)' }} onClick={() => handleDelete(d)}><i className="las la-trash-alt" style={{ fontSize: 14 }}></i></button>
                     </div>
                   </td>
                 </tr>
@@ -175,12 +175,66 @@ export default function DeploymentsPage() {
             <select value={rowsPerPage} onChange={e => { setRowsPerPage(Number(e.target.value)); setPage(0); }} style={{ ...inputStyle, width: 70, padding: '4px 8px', fontSize: 12 }}>
               <option value={5}>5</option><option value={10}>10</option><option value={25}>25</option>
             </select>
-            <button style={{ ...btn, padding: '4px 10px', opacity: page === 0 ? 0.4 : 1 }} disabled={page === 0} onClick={() => setPage(p => p - 1)}><i className="ti ti-chevron-left" style={{ fontSize: 14 }}></i></button>
+            <button style={{ ...btn, padding: '4px 10px', opacity: page === 0 ? 0.4 : 1 }} disabled={page === 0} onClick={() => setPage(p => p - 1)}><i className="las la-chevron-left" style={{ fontSize: 14 }}></i></button>
             <span>{page + 1} / {Math.max(1, Math.ceil(filtered.length / rowsPerPage))}</span>
-            <button style={{ ...btn, padding: '4px 10px', opacity: page >= Math.ceil(filtered.length / rowsPerPage) - 1 ? 0.4 : 1 } as React.CSSProperties} disabled={page >= Math.ceil(filtered.length / rowsPerPage) - 1} onClick={() => setPage(p => p + 1)}><i className="ti ti-chevron-right" style={{ fontSize: 14 }}></i></button>
+            <button style={{ ...btn, padding: '4px 10px', opacity: page >= Math.ceil(filtered.length / rowsPerPage) - 1 ? 0.4 : 1 } as React.CSSProperties} disabled={page >= Math.ceil(filtered.length / rowsPerPage) - 1} onClick={() => setPage(p => p + 1)}><i className="las la-chevron-right" style={{ fontSize: 14 }}></i></button>
           </div>
         </div>
       </div>
+
+      {selectedDeployment && !showModal && (
+        <div style={{ position: 'fixed', inset: 0, zIndex: 9999, display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'rgba(0,0,0,0.55)' }} onClick={() => setSelectedDeployment(null)}>
+          <div style={{ background: 'var(--bg2)', border: '1px solid var(--border)', borderRadius: 14, width: 540, maxWidth: '90vw', maxHeight: '85vh', overflow: 'auto' }} onClick={e => e.stopPropagation()}>
+            <div style={{ padding: '18px 22px', borderBottom: '1px solid var(--border)', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+              <div style={{ fontSize: 16, fontWeight: 700 }}>Deployment #{selectedDeployment.id}</div>
+              <button type="button" onClick={() => setSelectedDeployment(null)} style={{ background: 'none', border: 'none', color: 'var(--text3)', cursor: 'pointer', fontSize: 20, padding: 4 }}><i className="las la-times"></i></button>
+            </div>
+            <div style={{ padding: '18px 22px' }}>
+              <div style={{ marginBottom: 18 }}>
+                <div style={{ fontSize: 11, fontWeight: 600, color: 'var(--text3)', textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: 10 }}>Overview</div>
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px 20px' }}>
+                  <div><span style={{ fontSize: 11, color: 'var(--text3)', display: 'block', marginBottom: 2 }}>Deployment ID</span><span style={{ fontSize: 13, fontWeight: 600, fontFamily: "'JetBrains Mono', monospace" }}>#{selectedDeployment.id}</span></div>
+                  <div><span style={{ fontSize: 11, color: 'var(--text3)', display: 'block', marginBottom: 2 }}>Type</span><span style={{ fontSize: 13, textTransform: 'capitalize' }}>{selectedDeployment.type}</span></div>
+                  <div><span style={{ fontSize: 11, color: 'var(--text3)', display: 'block', marginBottom: 2 }}>Shift Pattern</span><span style={{ fontSize: 13, textTransform: 'capitalize' }}>{selectedDeployment.shiftPattern}</span></div>
+                  <div><span style={{ fontSize: 11, color: 'var(--text3)', display: 'block', marginBottom: 2 }}>Status</span>{badge(selectedDeployment.status.charAt(0).toUpperCase() + selectedDeployment.status.slice(1), statusColor[selectedDeployment.status] || '#5c6f8a')}</div>
+                </div>
+              </div>
+              <div style={{ marginBottom: 18 }}>
+                <div style={{ fontSize: 11, fontWeight: 600, color: 'var(--text3)', textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: 10 }}>Assignment</div>
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px 20px' }}>
+                  <div><span style={{ fontSize: 11, color: 'var(--text3)', display: 'block', marginBottom: 2 }}>Driver ID</span><span style={{ fontSize: 13 }}>D#{selectedDeployment.driverId}</span></div>
+                  <div><span style={{ fontSize: 11, color: 'var(--text3)', display: 'block', marginBottom: 2 }}>Vehicle ID</span><span style={{ fontSize: 13 }}>V#{selectedDeployment.vehicleId}</span></div>
+                  <div><span style={{ fontSize: 11, color: 'var(--text3)', display: 'block', marginBottom: 2 }}>Supervisor ID</span><span style={{ fontSize: 13 }}>{selectedDeployment.supervisorId != null ? `S#${selectedDeployment.supervisorId}` : '—'}</span></div>
+                  <div><span style={{ fontSize: 11, color: 'var(--text3)', display: 'block', marginBottom: 2 }}>Organization Unit</span><span style={{ fontSize: 13 }}>{selectedDeployment.organizationUnitId != null ? `OU#${selectedDeployment.organizationUnitId}` : '—'}</span></div>
+                </div>
+              </div>
+              <div style={{ marginBottom: 18 }}>
+                <div style={{ fontSize: 11, fontWeight: 600, color: 'var(--text3)', textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: 10 }}>Schedule</div>
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px 20px' }}>
+                  <div><span style={{ fontSize: 11, color: 'var(--text3)', display: 'block', marginBottom: 2 }}>Start Date</span><span style={{ fontSize: 13 }}>{selectedDeployment.startDate ? new Date(selectedDeployment.startDate).toLocaleDateString() : '—'}</span></div>
+                  <div><span style={{ fontSize: 11, color: 'var(--text3)', display: 'block', marginBottom: 2 }}>End Date</span><span style={{ fontSize: 13 }}>{selectedDeployment.endDate ? new Date(selectedDeployment.endDate).toLocaleDateString() : '—'}</span></div>
+                </div>
+              </div>
+              <div style={{ marginBottom: 18 }}>
+                <div style={{ fontSize: 11, fontWeight: 600, color: 'var(--text3)', textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: 10 }}>Approval</div>
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px 20px' }}>
+                  <div><span style={{ fontSize: 11, color: 'var(--text3)', display: 'block', marginBottom: 2 }}>Approved By</span><span style={{ fontSize: 13 }}>{selectedDeployment.approvedById != null ? `U#${selectedDeployment.approvedById}` : '—'}</span></div>
+                  <div><span style={{ fontSize: 11, color: 'var(--text3)', display: 'block', marginBottom: 2 }}>Approved At</span><span style={{ fontSize: 13 }}>{selectedDeployment.approvedAt ? new Date(selectedDeployment.approvedAt).toLocaleDateString() : '—'}</span></div>
+                </div>
+              </div>
+              {selectedDeployment.notes && (
+                <div>
+                  <div style={{ fontSize: 11, fontWeight: 600, color: 'var(--text3)', textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: 10 }}>Notes</div>
+                  <div style={{ fontSize: 13, color: 'var(--text2)', lineHeight: 1.6, background: 'var(--bg3)', borderRadius: 8, padding: '10px 14px', whiteSpace: 'pre-wrap' }}>{selectedDeployment.notes}</div>
+                </div>
+              )}
+            </div>
+            <div style={{ padding: '14px 22px', borderTop: '1px solid var(--border)', display: 'flex', justifyContent: 'flex-end' }}>
+              <button type="button" style={btn} onClick={() => setSelectedDeployment(null)}>Close</button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {showModal && (
         <div style={{ position: 'fixed', inset: 0, zIndex: 9999, display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'rgba(0,0,0,0.55)' }}>
@@ -188,10 +242,10 @@ export default function DeploymentsPage() {
             <form onSubmit={handleSubmit}>
               <div style={{ padding: '18px 22px', borderBottom: '1px solid var(--border)', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                 <div style={{ fontSize: 16, fontWeight: 700 }}>{editItem ? 'Edit Deployment' : 'New Deployment'}</div>
-                <button type="button" onClick={() => setShowModal(false)} style={{ background: 'none', border: 'none', color: 'var(--text3)', cursor: 'pointer', fontSize: 20, padding: 4 }}><i className="ti ti-x"></i></button>
+                <button type="button" onClick={() => setShowModal(false)} style={{ background: 'none', border: 'none', color: 'var(--text3)', cursor: 'pointer', fontSize: 20, padding: 4 }}><i className="las la-times"></i></button>
               </div>
               <div style={{ padding: '18px 22px' }}>
-                {formError && <div style={{ marginBottom: 14, padding: '8px 12px', background: 'rgba(239,68,68,0.1)', border: '1px solid rgba(239,68,68,0.2)', borderRadius: 6, fontSize: 12, color: 'var(--danger)' }}><i className="ti ti-alert-triangle" style={{ marginRight: 6 }}></i>{formError}</div>}
+                {formError && <div style={{ marginBottom: 14, padding: '8px 12px', background: 'rgba(239,68,68,0.1)', border: '1px solid rgba(239,68,68,0.2)', borderRadius: 6, fontSize: 12, color: 'var(--danger)' }}><i className="las la-exclamation-triangle" style={{ marginRight: 6 }}></i>{formError}</div>}
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 14 }}>
                   <div><label style={labelStyle}>Driver ID</label><input required type="number" value={form.driverId} onChange={e => setForm({ ...form, driverId: e.target.value })} style={inputStyle} /></div>
                   <div><label style={labelStyle}>Vehicle ID</label><input required type="number" value={form.vehicleId} onChange={e => setForm({ ...form, vehicleId: e.target.value })} style={inputStyle} /></div>
@@ -209,7 +263,7 @@ export default function DeploymentsPage() {
               <div style={{ padding: '14px 22px', borderTop: '1px solid var(--border)', display: 'flex', justifyContent: 'flex-end', gap: 10 }}>
                 <button type="button" style={btn} onClick={() => setShowModal(false)}>Cancel</button>
                 <button type="submit" style={{ ...btnPrimary, opacity: formLoading ? 0.6 : 1 }} disabled={formLoading}>
-                  {formLoading ? <i className="ti ti-loader" style={{ fontSize: 14, animation: 'spin 0.8s linear infinite' }}></i> : <i className="ti ti-device-floppy" style={{ fontSize: 14 }}></i>}
+                  {formLoading ? <i className="las la-spinner" style={{ fontSize: 14, animation: 'spin 0.8s linear infinite' }}></i> : <i className="las la-save" style={{ fontSize: 14 }}></i>}
                   {editItem ? ' Update' : ' Create'}
                 </button>
               </div>
